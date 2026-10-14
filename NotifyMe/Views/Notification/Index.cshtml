@@ -1,0 +1,71 @@
+﻿@model IEnumerable<NotifyMe.Core.Models.NotificationViewModel>
+@{
+    ViewData["Title"] = "Alerts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/alert.css" asp-append-version="true" />
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex bg-white rounded-3 shadow-sm px-4 py-3 justify-content-between align-items-center flex-wrap mb-4">
+        <h2 class="head-color m-0"><i class="bi bi-bell-fill me-2"></i>Notifications</h2>
+
+        <form asp-action="MarkAllAlertRead" method="post" class="m-0">
+            <button type="submit" class="btn btn-primary mx-2">
+                <i class="bi bi-check-all me-1"></i> Mark All Read
+            </button>
+        </form>
+    </div>
+
+    <div class="notification-list">
+        @foreach (var item in Model)
+        {
+            <div class="card mb-3 border-0 shadow-sm notification-card @(item.IsRead ? "" : "notification-unread")">
+                <div class="card-body">
+                    <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start">
+
+                        <div class="site-icon-container mb-3 mb-md-0 me-md-3">
+                            <img src="./images/logo.png"
+                                 class="rounded-circle shadow-sm"
+                                 width="45" height="45"
+                                 onerror="this.src='/images/default-icon.png';" />
+                        </div>
+
+                        <div class="flex-grow-1 w-100 text-center text-md-start">
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-start">
+                                <h5 class="mb-1 fw-bold text-dark text-break">
+                                    <span class="text-primary">@item.Title</span>
+                                </h5>
+                                <div class="d-flex align-items-center">
+                                    <small class="text-muted me-3">
+                                        <i class="bi bi-clock me-1"></i> @item.CreateAt.ToString("dd MMM yyyy | hh:mm tt")
+                                    </small>
+
+                                    @if (!item.IsRead)
+                                    {
+                                        <form asp-action="MarkAlertRead" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-link p-0 btn-mark-read" title="Mark as read">
+                                                <i class="bi bi-eye-fill fs-5"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-eye-slash text-muted opacity-50" title="Read"></i>
+                                    }
+                                </div>
+                            </div>
+
+                            <p class="mb-2 text-secondary text-wrap text-md-truncate" style="max-width: 900px;">
+                                @item.Body
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,187 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>NotifyMe</title>
+	<link rel="stylesheet" href="~/css/landing.css" asp-append-version="true" />
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+	<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="icon" href="~/images/logo.png" />
+</head>
+<body>
+	<div class="landing-wrapper">
+		<header class="container-fluid">
+			<a href="/" class="logo text-decoration-none">
+				<img src="~/images/logo.png" alt="Logo" width="35" height="35" class="d-inline-block align-top me-2">
+				<span>NotifyMe</span>
+			</a>
+			<nav class="d-none d-md-block">
+				<a href="#features">Features</a>
+				<a href="#pricing">Pricing</a>
+				<a href="/Identity/Account/Login">Login</a>
+				<a href="/Identity/Account/Register" class="primary-btn">Get Started</a>
+			</nav>
+		</header>
+
+		<section class="hero-container">
+			<div class="slider-track-horizontal">
+				<img src="/images/bg1.jpg" alt="1">
+				<img src="/images/bg2.jpg" alt="2">
+				<img src="/images/bg3.jpg" alt="3">
+				<img src="/images/bg1.jpg" alt="1">
+			</div>
+
+			<div class="hero-overlay-text" data-aos="fade-up">
+				<h1>Get notified when your website changes</h1>
+				<p>Monitor any webpage, track content changes using smart detection, and receive instant alerts via Email, Telegram, or Webhooks.</p>
+				<div class="hero-btns">
+					<a href="/Identity/Account/Register" class="btn btn-blue">Start Free Now</a>
+					<a href="#pricing" class="btn btn-outline-white">View Pricing</a>
+				</div>
+			</div>
+		</section>
+
+		<div id="features" class="container section-title" data-aos="fade-up">
+			<h2>Why NotifyMe?</h2>
+			<p>Powerful tools to keep you updated with the web.</p>
+		</div>
+
+		<section class="container mb-5">
+			<div class="row g-4 features-grid">
+				<div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="100">
+					<div class="feature-card h-100">
+						<div class="icon">🔍</div>
+						<h3>Website Monitoring</h3>
+						<p>Track changes on any webpage automatically with high precision.</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+					<div class="feature-card h-100">
+						<div class="icon">🎯</div>
+						<h3>CSS Selector Support</h3>
+						<p>Monitor specific parts of a page like prices, not everything.</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="300">
+					<div class="feature-card h-100">
+						<div class="icon">⚡</div>
+						<h3>Instant Alerts</h3>
+						<p>Receive notifications via Email, Telegram, or Webhooks instantly.</p>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="400">
+					<div class="feature-card h-100">
+						<div class="icon">🛡️</div>
+						<h3>Reliable & Secure</h3>
+						<p>Background processing with smart retry logic and detailed logs.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="pricing" class="container py-5">
+			<div class="section-title" data-aos="fade-up">
+				<h2>Simple, Transparent Pricing</h2>
+				<div class="pricing-toggle d-flex align-items-center justify-content-center gap-3 mt-4">
+					<span>Monthly</span>
+					<label class="switch">
+						<input type="checkbox" id="billingToggle">
+						<span class="slider"></span>
+					</label>
+					<span class="text-success">Yearly (Save 20%)</span>
+				</div>
+			</div>
+
+			<div class="row g-4 mt-4 justify-content-center">
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="plan-card h-100">
+						<h3>Free</h3>
+						<div class="price-value">$0</div>
+						<ul class="list-unstyled">
+							<li>Up to 3 monitors</li>
+							<li>45–60 min checks</li>
+							<li>Email alerts</li>
+							<li>7 days history</li>
+						</ul>
+						<a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary w-100 mt-auto">Get Started</a>
+					</div>
+				</div>
+
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+					<div class="plan-card popular h-100">
+						<span class="badge-popular">MOST POPULAR</span>
+						<h3>Pro</h3>
+						<div class="price-value" id="pro-price">$8</div>
+						<span class="price-duration period">Month</span>
+						<ul class="list-unstyled">
+							<li>Up to 30 monitors</li>
+							<li>10–30 min checks</li>
+							<li>Email & Telegram</li>
+							<li>30 days history</li>
+						</ul>
+						<a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary w-100 mt-auto">Upgrade Now</a>
+					</div>
+				</div>
+
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+					<div class="plan-card h-100">
+						<h3>Business</h3>
+						<div class="price-value" id="biz-price">$25</div>
+						<span class="price-duration period">Month</span>
+						<ul class="list-unstyled">
+							<li>Up to 200 monitors</li>
+							<li>1–10 min checks</li>
+							<li>Email & Telegram & Webhooks</li>
+							<li>90 days history</li>
+						</ul>
+						<a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary w-100 mt-auto">Go Business</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer class="py-3 bg-dark text-white text-center">
+			<div class="container">
+				<div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+					<span class="small opacity-75">© 2026 NotifyMe</span>
+					<div class="d-flex gap-3 small">
+						<a asp-controller="Customer" asp-action="Email" class="text-white text-decoration-none hover-link">
+							<i class="bi bi-envelope-at me-1"></i> Email
+						</a>
+						<a asp-controller="Customer" asp-action="Support" target="_blank" class="text-white text-decoration-none hover-link">
+							<i class="bi bi-whatsapp me-1"></i> WhatsApp
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<a asp-controller="Customer" asp-action="Support" target="_blank" class="whatsapp-float-btn">
+			<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+				<path d="M16 0a16 16 0 0 0-16 16 16 16 0 0 0 2.45 8.5L0 32l7.73-2.43A16 16 0 1 0 16 0zm9.14 22.84c-.38 1.07-2.19 1.95-3 2.06-.82.1-1.88.16-3-.17a12.8 12.8 0 0 1-5.4-3.4 14.1 14.1 0 0 1-3.7-5.5c-.46-1.22-.1-2.1.27-2.83.25-.5.7-.93.94-1.2.24-.26.33-.43.48-.73s.07-.56-.03-.84-.87-2.1-1.2-2.9c-.32-.77-.63-.67-.87-.67h-.74a1.44 1.44 0 0 0-1 .47 4.38 4.38 0 0 0-1.37 3.26c0 1.93.7 3.8 2.22 5.86 2.4 3.26 5.6 5.3 8.87 6.4.87.3 1.7.45 2.5.45a5.5 5.5 0 0 0 4-.9 4.3 4.3 0 0 0 1.6-3.15c.03-.43-.1-.83-.22-1.03s-.4-.3-.8-.5z" fill="white" />
+			</svg>
+			<span>WhatsApp</span>
+		</a>
+
+		@Html.AntiForgeryToken()
+	</div>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			AOS.init({
+				duration: 1000,
+				once: true,
+				offset: 50
+			});
+		});
+	</script>
+	<script src="~/js/package.js" asp-append-version="true"></script>
+</body>
+</html>

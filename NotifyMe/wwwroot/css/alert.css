@@ -1,0 +1,65 @@
+﻿.notification-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent !important;
+}
+
+    .notification-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+        border-left: 4px solid #6f42c1 !important;
+    }
+
+.site-icon-container {
+    background: #f8f9fa;
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee;
+}
+
+.head-color {
+    color: #333;
+    font-weight: 700;
+}
+
+.badge {
+    font-weight: 500;
+    padding: 6px 12px;
+}
+
+.text-break {
+    word-break: break-word !important;
+}
+
+@media (max-width: 576px) {
+    .notification-card {
+        margin-left: -10px;
+        margin-right: -10px;
+        border-radius: 0;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .site-icon-container {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+.notification-unread {
+    background-color: #f0f7ff !important;
+    border-left: 4px solid #0d6efd !important;
+}
+
+.btn-mark-read {
+    color: #6c757d;
+    transition: color 0.2s;
+}
+
+    .btn-mark-read:hover {
+        color: #0d6efd;
+    }

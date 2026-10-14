@@ -1,0 +1,89 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+body {
+    background: linear-gradient(135deg, #f7f9fb, #e6edf4);
+    font-family: 'Tajawal', sans-serif;
+    overflow: hidden;
+    color: #333;
+}
+
+.welcome-text h2 {
+    color: #622c8e;
+    font-size: 2.8rem;
+    padding-top: 90px;
+    animation: fadeInDown 1s ease forwards;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    background: #ffffffee;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .login-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+.btn-primary {
+    background: linear-gradient(90deg, #622c8e, #622c8e);
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #622c8e, #622c8e);
+        box-shadow: 0 0 10px #622c8e;
+    }
+
+.form-control:focus {
+    border-color: #622c8e;
+    box-shadow: 0 0 5px #622c8e;
+}
+
+h3 {
+    color: #622c8e;
+}
+
+a {
+    color: #622c8e;
+    transition: color 0.3s ease;
+}
+
+    a:hover {
+        color: #622c8e;
+        text-decoration: underline;
+    }
+
+.small {
+    font-size: 0.9rem;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

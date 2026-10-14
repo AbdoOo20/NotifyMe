@@ -1,0 +1,130 @@
+﻿@model NotifyMe.Core.Models.CustomerStatisticsViewModel
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid py-4 px-4">
+    <div class="mb-4 text-start">
+        <h2 class="fw-bold text-dark">Welcome back! 👋</h2>
+        <p class="text-muted">Overview of your monitoring activities and subscription.</p>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm p-3 h-100">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
+                        <i class="bi bi-activity text-success fs-3"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Active Monitors</p>
+                        <h3 class="mb-0 fw-bold">@Model.ActiveMonitorCount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm p-3 h-100">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-danger bg-opacity-10 p-3 me-3">
+                        <i class="bi bi-pause-btn-fill text-danger fs-3"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Inactive Monitors</p>
+                        <h3 class="mb-0 fw-bold">@Model.InActiveMonitorCount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm p-3 h-100">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
+                        <i class="bi bi-exclamation-triangle-fill text-warning fs-3"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Alerts</p>
+                        <h3 class="mb-0 fw-bold">@Model.TotalAlerts</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm p-3 h-100">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+                        <i class="bi bi-megaphone-fill text-primary fs-3"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Notifications</p>
+                        <h3 class="mb-0 fw-bold">@Model.TotalNotifications</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-4 bg-dark text-white p-4 d-flex flex-column justify-content-center border-end border-secondary border-opacity-25">
+                        <p class="text-info mb-1 fw-bold text-uppercase small">Current Plan</p>
+                        <h1 class="display-4 fw-bold">@Model.PackageType</h1>
+                        <div class="mt-2">
+                            <span class="badge bg-info text-dark rounded-pill px-3">@Model.SubscriptionDuration Billing</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 p-4 bg-white">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0 text-dark">Subscription Period</h5>
+                            <span class="text-muted small">
+                                <i class="bi bi-calendar3 me-1"></i>
+                                @Model.StartDate.ToString("MMM dd, yyyy") - @Model.EndDate.ToString("MMM dd, yyyy")
+                            </span>
+                        </div>
+
+                        @{
+                            var totalDays = (Model.EndDate - Model.StartDate).TotalDays;
+                            var elapsedDays = (DateTime.Now - Model.StartDate).TotalDays;
+                            var progress = (elapsedDays / totalDays) * 100;
+                            progress = progress > 100 ? 100 : (progress < 0 ? 0 : progress);
+                            var remainingDays = (int)(Model.EndDate - DateTime.Now).TotalDays;
+                        }
+
+                        <div class="progress mb-2" style="height: 10px; border-radius: 50px;">
+                            <div class="progress-bar bg-info" role="progressbar"
+                                 style="width: @progress.ToString("0")%"
+                                 aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-4">
+                            <small class="text-muted">Started: @Model.StartDate.ToString("MMM dd, yyyy")</small>
+                            <small class="fw-bold text-dark">@(remainingDays > 0 ? remainingDays + " days remaining" : "Expired")</small>
+                        </div>
+
+                        <div class="row align-items-center mt-3 pt-3 border-top">
+                            <div class="col-sm-8">
+                                <p class="text-muted mb-0 small">
+                                    Your monitors are running based on the <strong>@Model.PackageType</strong> plan limits.
+                                    Alerts are active until <strong>@Model.EndDate.ToString("MMM dd, yyyy")</strong>.
+                                </p>
+                            </div>
+                            <div class="col-sm-4 text-sm-end mt-3 mt-sm-0">
+                                <a asp-controller="Package" asp-action="Index" class="btn btn-dark rounded-pill px-4">Upgrade Plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

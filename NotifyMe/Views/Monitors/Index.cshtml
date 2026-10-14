@@ -1,0 +1,124 @@
+﻿@model IEnumerable<NotifyMe.Core.Models.MonitorViewModel>
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex bg-white rounded-top-3 px-4 py-2 justify-content-between align-items-center flex-wrap">
+	<h1 class="head-color my-4">Monitors</h1>
+
+	<div class="d-inline-flex align-items-stretch gap-1 align-items-center my-2 col-12 col-md-8 justify-content-md-end">
+		<a asp-action="Create" class="btn btn-primary mx-2">Create</a>
+		<div class="input-group mx-2 flex-grow-1" style="max-width: 300px;">
+			<span class="input-group-text rounded-start-3 rounded-end-0" style="background-color: #D9D9D9A8">
+				<img class="rounded-2 mx-1" width="20px" height="20px" src="~/images/search.png" alt="Search Image" />
+			</span>
+			<input type="text" id="searchTable" class="form-control rounded-start-0 rounded-end-3" placeholder="Search about monitor..." />
+		</div>
+	</div>
+</div>
+
+<div class="table-responsive">
+	<table class="table border-custom" id="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.URL)
+				</th>
+				<th class="text-center">
+					@Html.DisplayNameFor(model => model.CheckIntervalMinutes)
+				</th>
+				<th class="text-center">
+					@Html.DisplayNameFor(model => model.IsActive)
+				</th>
+				<th class="text-center">
+					@Html.DisplayNameFor(model => model.LastCheckedAt)
+				</th>
+				<th class="text-center">
+					@Html.DisplayNameFor(model => model.CssSelector)
+				</th>
+				<th class="text-center">
+					@Html.DisplayNameFor(model => model.CreateAt)
+				</th>
+				<th class="text-center">
+					@Html.DisplayNameFor(model => model.NotificationChannel)
+				</th>
+				<th>
+					Actions
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.URL)
+					</td>
+					<td class="text-center">
+						@Html.DisplayFor(modelItem => item.CheckIntervalMinutes)
+					</td>
+					<td class="text-center">
+						@if (item.IsActive)
+						{
+							<span class="fw-bold" style="color:green;">Active</span>
+						}
+						else
+						{
+							<span class="fw-bold" style="color:red;">Inactive</span>
+						}
+					</td>
+					<td class="text-center">
+						@Html.DisplayFor(modelItem => item.LastCheckedAt)
+					</td>
+					<td class="text-center">
+						@if (item.CssSelector != null && item.CssSelector != "") 
+						{
+							<button type="button" class="btn btn-link text-primary p-0" data-bs-toggle="modal" data-bs-target="#cssModal-@item.Id">
+								<i class="bi bi-eye-fill fs-5"></i>
+							</button>
+
+							<div class="modal fade" id="cssModal-@item.Id" tabindex="-1" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-sm">
+									<div class="modal-content shadow border-0">
+										<div class="modal-header bg-light">
+											<h6 class="modal-title fw-bold">CSS Selector</h6>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body text-start">
+											<code class="text-danger p-2 bg-light d-block rounded">
+												@item.CssSelector
+											</code>
+										</div>
+										<div class="modal-footer p-1">
+											<button type="button" class="btn btn-secondary btn-sm w-100" data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					</td>
+					<td class="text-center">
+						@Html.DisplayFor(modelItem => item.CreateAt)
+					</td>
+					<td class="text-center">
+						@Html.DisplayFor(modelItem => item.NotificationChannel)
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@item.Id" class="me-2" title="Edit">
+							<span class="svg-icon" style="--icon-url: url('/images/edit.svg');"></span>
+						</a>
+						<a asp-action="Delete" asp-route-id="@item.Id" class="me-2" title="Delete">
+							<span class="svg-icon" style="--icon-url: url('/images/delete.svg');"></span>
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@section Scripts {
+	<script src="~/js/datatable.js"></script>
+}

@@ -1,0 +1,254 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Text.Json
+@using NotifyMe.Core.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"]</title>
+
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+	<!-- Icon -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+	<!-- Stylesheets -->
+	<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+	<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+	@await RenderSectionAsync("Styles", required: false)
+
+	<!-- Favicon -->
+	<link rel="icon" href="~/images/logo.png" />
+</head>
+<body>
+
+	@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+	{
+		<!-- ======= Header ======= -->
+		<header id="header" class="header fixed-top d-flex align-items-center">
+			<!-- Logo -->
+			<div class="d-flex align-items-center justify-content-between">
+				<a asp-controller="Admin" asp-action="Index" class="text-white fs-5 mx-5 text-decoration-none">Dashboard</a>
+				<i class="fa-solid text-white fa-bars toggle-sidebar-btn mx-5" id="toggleSidebar"></i>
+			</div>
+
+			<!-- User Dropdown -->
+			<div class="ms-auto d-flex justify-content-end align-items-center">
+				<div class="d-flex text-center">
+					<div class="text-start">
+						<label class="text-white fw-bold">Admin</label>
+						<br />
+						<label class="text-white">@Context.User.Identity!.Name</label>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;"></div>
+
+		<!-- ======= Sidebar ======= -->
+		<aside id="sidebar" class="sidebar">
+			<ul class="sidebar-nav" id="sidebar-nav">
+
+				<li class="nav-item mt-5">
+					<a class="nav-link justify-content-between" asp-controller="Customers" asp-action="Index">
+						<span>Customers</span>
+						<i class="fa-solid fa-chevron-right"></i>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" asp-controller="Monitors" asp-action="All">
+						<span>Monitors</span>
+						<i class="fa-solid fa-chevron-right"></i>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" asp-controller="Subscriptions" asp-action="Index">
+						<span>Subscriptions</span>
+						<i class="fa-solid fa-chevron-right"></i>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" asp-controller="Notification" asp-action="Index">
+						<span>Notifications</span>
+						<div class="d-flex">
+							<span id="nav-notification-count" class="badge bg-danger mx-2"></span>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</a>
+				</li>
+
+				<hr class="mx-2" style="width: 95%; color: white">
+
+				<li class="nav-item">
+					<form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+						<button type="submit" class="btn logbtn w-100">
+							Logout
+						</button>
+					</form>
+				</li>
+			</ul>
+		</aside>
+	}
+
+	@if (SignInManager.IsSignedIn(User) && User.IsInRole("Customer"))
+	{
+		<!-- ======= Header ======= -->
+		<header id="header" class="header fixed-top d-flex align-items-center">
+			<!-- Logo -->
+			<div class="d-flex align-items-center justify-content-between">
+				<a asp-controller="Customer" asp-action="Index" class="text-white fs-5 mx-5 text-decoration-none">Dashboard</a>
+				<i class="fa-solid text-white fa-bars toggle-sidebar-btn mx-5" id="toggleSidebar"></i>
+			</div>
+
+			<!-- User Dropdown -->
+			<div class="ms-auto d-flex justify-content-end align-items-center">
+				<div class="d-flex text-center">
+					<div class="text-start">
+						<label class="text-white fw-bold">User</label>
+						<br />
+						<label class="text-white">@Context.User.Identity!.Name</label>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;"></div>
+
+		<!-- ======= Sidebar ======= -->
+		<aside id="sidebar" class="sidebar">
+			<ul class="sidebar-nav" id="sidebar-nav">
+
+				<li class="nav-item mt-5">
+					<a class="nav-link justify-content-between" asp-controller="Profile" asp-action="Index">
+						<span>Profile</span>
+						<i class="fa-solid fa-chevron-right"></i>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" asp-controller="Monitors" asp-action="Index">
+						<span>Monitors</span>
+						<i class="fa-solid fa-chevron-right"></i>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" asp-controller="Alerts" asp-action="Index">
+						<span>Alerts</span>
+						<div class="d-flex">
+							<span id="nav-alerts-count" class="badge bg-danger mx-2"></span>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" asp-controller="Package" asp-action="Index">
+						<span>Packages</span>
+						<i class="fa-solid fa-chevron-right"></i>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" asp-controller="Notification" asp-action="Index">
+						<span>Notifications</span>
+						<div class="d-flex">
+							<span id="nav-notification-count" class="badge bg-danger mx-2"></span>
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link justify-content-between" target="_blank" asp-controller="Customer" asp-action="Support">
+						<span>Support</span>
+						<i class="fa-solid fa-chevron-right"></i>
+					</a>
+				</li>
+
+				<hr class="mx-2" style="width: 95%; color: white">
+
+				<li class="nav-item">
+					<form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+						<button type="submit" class="btn logbtn w-100">
+							Logout
+						</button>
+					</form>
+				</li>
+			</ul>
+		</aside>
+	}
+
+	<!-- ======= Main ======= -->
+	<main id="main" class="main">
+		@if (TempData["ErrorMessage"] != null)
+		{
+			<script>
+				window.onload = function () {
+				Swal.fire({
+				icon: 'error',
+				title: 'Error',
+				text: @Html.Raw(JsonSerializer.Serialize(TempData["ErrorMessage"])),
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#d33'
+				});
+				};
+			</script>
+		}
+		@if (TempData["SuccessMessage"] != null)
+		{
+			<script>
+				window.onload = function () {
+				Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: @Html.Raw(JsonSerializer.Serialize(TempData["SuccessMessage"])),
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#28a745'
+				});
+				};
+			</script>
+		}
+		<section class="section dashboard">
+			@RenderBody()
+		</section>
+		@if (SignInManager.IsSignedIn(User) && User.IsInRole("Customer"))
+		{
+			<a asp-controller="Customer" asp-action="Support" target="_blank" class="whatsapp-float-btn">
+				<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+					<path d="M16 0a16 16 0 0 0-16 16 16 16 0 0 0 2.45 8.5L0 32l7.73-2.43A16 16 0 1 0 16 0zm9.14 22.84c-.38 1.07-2.19 1.95-3 2.06-.82.1-1.88.16-3-.17a12.8 12.8 0 0 1-5.4-3.4 14.1 14.1 0 0 1-3.7-5.5c-.46-1.22-.1-2.1.27-2.83.25-.5.7-.93.94-1.2.24-.26.33-.43.48-.73s.07-.56-.03-.84-.87-2.1-1.2-2.9c-.32-.77-.63-.67-.87-.67h-.74a1.44 1.44 0 0 0-1 .47 4.38 4.38 0 0 0-1.37 3.26c0 1.93.7 3.8 2.22 5.86 2.4 3.26 5.6 5.3 8.87 6.4.87.3 1.7.45 2.5.45a5.5 5.5 0 0 0 4-.9 4.3 4.3 0 0 0 1.6-3.15c.03-.43-.1-.83-.22-1.03s-.4-.3-.8-.5z" fill="white" />
+				</svg>
+				<span>WhatsApp</span>
+			</a>
+		}
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- DataTables -->
+	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="~/JS/layout.js" asp-append-version="true"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.7/signalr.min.js"></script>
+	<script src="~/js/notification.js" asp-append-version="true"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

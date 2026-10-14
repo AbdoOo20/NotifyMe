@@ -1,0 +1,173 @@
+﻿/* ======= Global Styles ======= */
+:root {
+    --primary-color: #622c8e;
+    --secondary-color: #6c757d;
+    --background-color: #f8f9fa;
+    --header-bg: #343a40;
+    --sidebar-bg: #23272b;
+    --text-color: #fff;
+    --link-hover: #622c8e;
+}
+
+body {
+    font-family: "Arial", sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    color: #333;
+    overflow-x: hidden; /* Prevent unwanted horizontal scrolling */
+}
+
+/* ======= Header Styles ======= */
+.header {
+    background: var(--header-bg);
+    padding: 0px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-sidebar-btn {
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+/* ======= Sidebar Styles ======= */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+    z-index: 1000;
+    padding: 0px 10px;
+}
+
+    /* Hide sidebar */
+    .sidebar.hidden {
+        transform: translateX(-100%);
+    }
+
+/* Sidebar Navigation */
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+}
+
+    .sidebar-nav .nav-item {
+        margin: 10px 0;
+    }
+
+        .sidebar-nav .nav-item a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 10px;
+            color: var(--text-color);
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+
+            .sidebar-nav .nav-item a:hover {
+                background: var(--link-hover);
+            }
+
+/* ======= Main Content Styles ======= */
+.main {
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 250px; /* Default when sidebar is open */
+    margin-top: 40px;
+    padding: 20px;
+}
+
+/* If sidebar is hidden, main content should expand */
+.sidebar.hidden + .main {
+    margin-left: 0;
+}
+
+/* ======= Logout Button ======= */
+.logout-form {
+    text-align: center;
+    padding: 10px;
+}
+
+.logbtn {
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+    .logbtn:hover {
+        background: var(--link-hover);
+        color: var(--text-color);
+    }
+
+/* ======= Responsive Design ======= */
+@media (max-width: 991px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main {
+        margin-left: 200px;
+    }
+
+    /* When sidebar is hidden on small screens */
+    .sidebar.hidden + .main {
+        margin-left: 0;
+    }
+}
+
+/* Fix table direction */
+.table {
+    direction: ltr;
+}
+
+.table-responsive {
+    border-radius: 10px;
+}
+
+
+.tableHead {
+    color: var(--sidebar-bg);
+    font-size: 30px;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    font-size: 20px;
+    text-align: center;
+}
+
+.search {
+    max-width: 300px;
+}
+
+.dataTables_filter {
+    display: none !important;
+}
+
+.dataTables_info {
+    display: none !important;
+}
+
+.dataTables_length {
+    display: none !important;
+}
+
+.svg-icon {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-image: var(--icon-url);
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-size: 18px;
+}

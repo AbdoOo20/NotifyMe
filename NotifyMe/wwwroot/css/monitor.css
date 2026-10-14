@@ -1,0 +1,14 @@
+﻿#css-help-section {
+    border-radius: 12px;
+    scroll-margin-top: 100px;
+}
+
+    #css-help-section li {
+        color: #444;
+        line-height: 1.6;
+    }
+
+.head-color {
+    color: #333;
+    font-weight: 700;
+}

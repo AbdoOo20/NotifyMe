@@ -1,0 +1,71 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<link href="~/css/login.css" rel="stylesheet" />
+
+<div class="welcome-text text-center mb-4">
+    <h2 class="fw-bold">
+        <i class="me-2"></i>Create New Account
+    </h2>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-150">
+    <div class="row w-100">
+        <div class="col-lg-5 mx-auto">
+            <div class="login-card" style="direction: ltr">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="~/images/logo.png" alt="Logo" width="50px" height="50px">
+                        <h3 class="text-center mb-4 fw-bold">
+                            <i class="me-2"></i>REGISTER
+                        </h3>
+                    </div>
+
+                    <form id="registerForm" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                            <label asp-for="Input.Email" style="text-align: left; right: auto; left: 0;">Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Phone" class="form-control" type="tel" aria-required="true" />
+                            <label asp-for="Input.Phone" style="text-align: left; right: auto; left: 0;">Phone</label>
+                            <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" type="password" class="form-control" autocomplete="new-password" aria-required="true" />
+                            <label asp-for="Input.Password" style="text-align: left; right: auto; left: 0;">Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.ConfirmPassword" type="password" class="form-control" autocomplete="new-password" aria-required="true" />
+                            <label asp-for="Input.ConfirmPassword" style="text-align: left; right: auto; left: 0;">Confirm Password</label>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="me-1"></i>Register
+                        </button>
+
+                        <div class="text-center pt-4">
+                            <a class="fs-5" asp-area="Identity" asp-page="/Account/Login"> Have an account ? login now </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

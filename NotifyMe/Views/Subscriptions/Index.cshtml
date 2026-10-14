@@ -1,0 +1,136 @@
+﻿@model IEnumerable<NotifyMe.Core.Models.SubscriptionViewModel>
+@using NotifyMe.Core.Enums
+@{
+    ViewData["Title"] = "Subscriptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex bg-white rounded-top-3 px-4 py-2 justify-content-between align-items-center flex-wrap">
+    <h1 class="head-color my-4">Subscriptions</h1>
+
+    <div class="d-flex align-items-center my-2 col-12 col-md-8 justify-content-md-end">
+        <div class="input-group me-2 flex-grow-1" style="max-width: 300px;">
+            <span class="input-group-text rounded-start-3 rounded-end-0" style="background-color: #D9D9D9A8">
+                <img class="rounded-2 mx-1" width="20px" height="20px" src="~/images/search.png" alt="Search Image" />
+            </span>
+            <input type="text" id="searchTable" class="form-control rounded-start-0 rounded-end-3" placeholder="Search about subscription..." />
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table border-custom" id="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">Package</th>
+                <th class="text-center">Start Date</th>
+                <th class="text-center">End Date</th>
+                <th class="text-center">Duration</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Is Active</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.CustomerEmail
+                    </td>
+                    <td class="text-center">
+                        @item.CustomerPhone
+                    </td>
+                    <td class="text-center">
+                        @{
+                            if (@item.PackageType == PackageType.Business)
+                            {
+                                <span class="badge bg-info text-dark">@item.PackageType</span>
+                            }
+                            else if (@item.PackageType == PackageType.Pro)
+                            {
+                                <span class="badge bg-warning text-dark">@item.PackageType</span>
+                            }
+                            else 
+                            {
+                                <span class="badge bg-danger text-dark">@item.PackageType</span>
+                            }
+                        }
+                    </td>
+                    <td class="text-center">
+                        @item.StartDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td class="text-center">
+                        @item.EndDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td class="text-center">
+                        @{
+                            var totalDays = (item.EndDate - item.StartDate).TotalDays;
+                            SubscriptionDuration durationDisplay;
+
+                            if (totalDays >= 360)
+                            {
+                                durationDisplay = SubscriptionDuration.Year;
+                            }
+                            else
+                            {
+                                durationDisplay = SubscriptionDuration.Month;
+                            }
+                        }
+                        @durationDisplay
+                    </td>
+                    <td class="text-center">
+                        @if (item.SubscriptionStatus == SubscriptionStatus.Cancelled) 
+                        {
+                            <span class="fw-bold" style="color:#6c757d;">@SubscriptionStatus.Cancelled</span>
+                        }
+                        @if (item.SubscriptionStatus == SubscriptionStatus.Pending)
+                        {
+                            <span class="fw-bold" style="color:#ffc107;">@SubscriptionStatus.Pending</span>
+                        }
+                        @if (item.SubscriptionStatus == SubscriptionStatus.Active)
+                        {
+                            <span class="fw-bold" style="color:green;">@SubscriptionStatus.Active</span>
+                        }
+                        @if (item.SubscriptionStatus == SubscriptionStatus.Expired)
+                        {
+                            <span class="fw-bold" style="color: red;">@SubscriptionStatus.Expired</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (item.IsActive)
+                        {
+                            <span class="fw-bold" style="color:green;">Active</span>
+                        }
+                        else
+                        {
+                            <span class="fw-bold" style="color:red;">Inactive</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (item.SubscriptionStatus == SubscriptionStatus.Pending)
+                        {
+                            <form asp-action="Approve" asp-route-id="@item.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-link p-0 me-2" title="Approve">
+                                    <i class="bi bi-check-circle-fill text-success" style="font-size: 1.2rem;"></i>
+                                </button>
+                            </form>
+
+                            <form asp-action="Reject" asp-route-id="@item.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-link p-0 me-2" title="Reject">
+                                    <i class="bi bi-x-circle-fill text-danger" style="font-size: 1.2rem;"></i>
+                                </button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/datatable.js"></script>
+}

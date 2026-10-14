@@ -1,0 +1,12 @@
+﻿// Customer Home Dashboard ==> Done 
+// BackgroundService To Expire Subscription ==> Done
+// BackgrountService To Delete Alert ==> Done
+// Access Denied Page ==> Done 
+// CSS Selector Handler  ==> Done
+// Show All Monitors in admin and create logs error table  ==> Done
+// Show how to get css selectors ==> Done
+
+
+// Admin Support Work 
+(1) Check Errors For Monitors 
+(2) Check about users that create account and do not subscribe with package (lock account)
